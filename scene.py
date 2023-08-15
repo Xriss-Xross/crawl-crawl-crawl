@@ -1,7 +1,7 @@
 import pygame
 from wall import Wall
 from floor import Floor
-from levels import ROOM5
+from levels import ROOM2
 
 class Scene:
     def __init__(self, screen):
@@ -17,7 +17,7 @@ class Scene:
 
     #  makes a grid from a room
     def generate(self):
-        for y, row in enumerate(ROOM5):
+        for y, row in enumerate(ROOM2):
             y *= 48
             for x, col in enumerate(row):
                 x *= 48
