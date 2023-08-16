@@ -1,32 +1,40 @@
 import pygame
 from wall import Wall
 from floor import Floor
+from player import Player
 from levels import ROOM2
+
+top = (336, 0)
+right = (672, 336)
+bottom = (336, 672)
+left = (0, 336)
 
 class Scene:
     def __init__(self, screen):
         
         self.screen = screen
-        #  sprite groups (either they are characters or they are environmental obstacles)
+        #  sprite groups (whether they are interactable and/or visible etc.)
         #  sprite groups will be passed into a class as a list becuase sprites can have more than one
-        self.sprites = pygame.sprite.Group()
+        self.sprite = pygame.sprite.Group()
         self.obstruction = pygame.sprite.Group()
         self.environment = pygame.sprite.Group()
+        self.entity = pygame.sprite.Group()
 
         self.generate()
 
-    #  makes a grid from a room
+    #  makes a numerical grid from an array
     def generate(self):
         for y, row in enumerate(ROOM2):
             y *= 48
             for x, col in enumerate(row):
                 x *= 48
                 if col == 'W':
-                    Wall((x, y), [self.obstruction])
+                    Wall((x, y), [self.obstruction, self.sprite])
                 else:
-                    Floor((x, y), [self.environment])
+                    Floor((x, y), [self.environment, self.sprite])
+        Player(left, [self.sprite])
 
 
     def run(self):
-        self.obstruction.draw(self.screen)
-        self.environment.draw(self.screen)
+        self.sprite.draw(self.screen)
+        self.sprite.update()
