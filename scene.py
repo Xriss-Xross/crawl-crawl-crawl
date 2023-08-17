@@ -32,7 +32,7 @@ class Scene:
                     Wall((x, y), [self.obstruction, self.sprite])
                 else:
                     Floor((x, y), [self.environment, self.sprite])
-        Player(left, [self.sprite])
+        Player(left, [self.sprite], self.obstruction)
 
 
     def run(self):
