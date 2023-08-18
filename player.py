@@ -1,9 +1,11 @@
 import pygame
+import os
+from os import listdir
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, obstruction):
         super().__init__(groups)
-        self.image = pygame.image.load('./assets/knight.png').convert_alpha()
+        self.image = pygame.image.load('./assets/knight/idle_left/knight1.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (48, 48))
         self.rect = self.image.get_rect(topleft = pos)
 
@@ -12,9 +14,24 @@ class Player(pygame.sprite.Sprite):
         self.attack_cooldown = 20
         self.cooldown = 20
 
+        self.asset_loader()
+
 
     def asset_loader(self):
-        pass
+        knight_folder = 'C:/Users/killi/code/python/crawl-crawl-crawl/assets/knight/'
+        self.knight_states = {'left': [], 'right': [], 'attack_left': [], 'attack_right': [], 'idle_left': [], 'idle_right': []}
+
+        def import_images(path):
+            images = []
+            for image in os.listdir(path):
+                images.append(image)
+            return images
+
+        for state in self.knight_states.keys():
+            path = knight_folder + state + '/'
+
+
+            self.knight_states[state] = import_images(path)
 
 
     def input_listener(self):

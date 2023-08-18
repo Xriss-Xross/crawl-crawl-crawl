@@ -8,11 +8,9 @@ class Game:
         pygame.init()
         self.screen = pygame.display.set_mode((15*48, 15*48))
         pygame.display.set_caption('Crawl Crawl Crawl')
-        pygame.display.set_icon(pygame.image.load('./assets/knight.png').convert_alpha())
-
         self.clock = pygame.time.Clock()
-
         self.scene = Scene(self.screen)
+
 
 
     #  runtime
