@@ -11,9 +11,12 @@ class Player(pygame.sprite.Sprite):
 
         self.obstruction = obstruction
         self.movement_direction = pygame.math.Vector2() #  creates a vector with x and y values
+
+
         self.attack_cooldown = 20
         self.cooldown = 20
 
+        self.state = 'idle_right'
         self.asset_loader()
 
 
@@ -53,15 +56,32 @@ class Player(pygame.sprite.Sprite):
             self.movement_direction.x = 0
         elif input[pygame.K_a]:
             self.movement_direction.x = -1
+            self.state = 'left'
         elif input[pygame.K_d]:
             self.movement_direction.x = 1
+            self.state = 'right'
         else:
             self.movement_direction.x = 0
 
         #  attack input
         if input[pygame.K_SPACE] and self.attack_cooldown == self.cooldown:
-            print('attack')
             self.attack_cooldown = 0
+            self.attack_query = True
+            if 'idle_' in self.state:
+                self.state = self.state.replace('idle_', 'attack_')
+            elif 'attack_' not in self.state:
+                self.state = 'attack_' + self.state
+
+
+    def idle_listener(self):
+        if 'attack_' in self.state:
+            if self.attack_query == True:
+                self.attack_query = False
+                self.state = self.state[7:]
+    
+        if self.movement_direction.x == 0 and self.movement_direction.y == 0 and 'idle_' not in self.state and 'attack_' not in self.state:
+            self.state = 'idle_' + self.state
+
 
 
     def cooldown_handler(self):
@@ -100,4 +120,7 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.cooldown_handler()
         self.input_listener()
+        #  animate between input listener and state_listener
+        print(self.state)
+        self.idle_listener()
         self.move(3)

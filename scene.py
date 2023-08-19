@@ -2,7 +2,7 @@ import pygame
 from wall import Wall
 from floor import Floor
 from player import Player
-from levels import ROOM2
+from levels import ROOM1
 
 top = (336, 0)
 right = (672, 336)
@@ -24,7 +24,7 @@ class Scene:
 
     #  makes a numerical grid from an array
     def generate(self):
-        for y, row in enumerate(ROOM2):
+        for y, row in enumerate(ROOM1):
             y *= 48
             for x, col in enumerate(row):
                 x *= 48
