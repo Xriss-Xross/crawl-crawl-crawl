@@ -24,14 +24,15 @@ class Player(pygame.sprite.Sprite):
         def import_images(path):
             images = []
             for image in os.listdir(path):
-                images.append(image)
+                image_surf = pygame.image.load(path + image).convert_alpha()
+                images.append(image_surf)
             return images
 
         for state in self.knight_states.keys():
             path = knight_folder + state + '/'
 
-
             self.knight_states[state] = import_images(path)
+        print(self.knight_states)
 
 
     def input_listener(self):
