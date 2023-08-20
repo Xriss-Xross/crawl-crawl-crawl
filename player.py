@@ -1,6 +1,6 @@
 import pygame
 import os
-from os import listdir
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, obstruction):
@@ -8,6 +8,9 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.image.load('./assets/knight/idle_left/knight1.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (48, 48))
         self.rect = self.image.get_rect(topleft = pos)
+        self.frame = 0
+        self.attack_query = False
+        self.attacking = False
 
         self.obstruction = obstruction
         self.movement_direction = pygame.math.Vector2() #  creates a vector with x and y values
@@ -35,7 +38,6 @@ class Player(pygame.sprite.Sprite):
             path = knight_folder + state + '/'
 
             self.knight_states[state] = import_images(path)
-        print(self.knight_states)
 
 
     def input_listener(self):
@@ -83,6 +85,26 @@ class Player(pygame.sprite.Sprite):
             self.state = 'idle_' + self.state
 
 
+    def animate(self): 
+        if 'attack_' in self.state or self.attacking == True:
+            if self.attacking != True:
+                self.frame = 0
+                self.animation = self.knight_states[self.state]
+            self.frame += 0.15
+            self.attacking = True
+            self.image = self.animation[int(self.frame)]
+            if int(self.frame) == 3:
+                self.attacking = False
+
+
+        elif self.attacking == False:
+            self.frame += 0.15
+            self.animation = self.knight_states[self.state]
+            if self.frame >= len(self.animation):
+                self.frame = 0
+            self.image = self.animation[int(self.frame)]
+            self.rect = self.image.get_rect(center = self.rect.center)   
+
 
     def cooldown_handler(self):
         if self.attack_cooldown != self.cooldown:
@@ -120,7 +142,6 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.cooldown_handler()
         self.input_listener()
-        #  animate between input listener and state_listener
-        print(self.state)
+        self.animate()
         self.idle_listener()
         self.move(3)
