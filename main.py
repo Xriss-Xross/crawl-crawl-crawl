@@ -12,7 +12,6 @@ class Game:
         self.scene = Scene(self.screen)
 
 
-
     #  runtime
     def run(self):
         while True:

@@ -15,8 +15,16 @@ class Player(pygame.sprite.Sprite):
         self.obstruction = obstruction
         self.movement_direction = pygame.math.Vector2() #  creates a vector with x and y values
 
-
+        #  upgradeable player stats
+        self.max_health = 100
+        self.health = self.max_health
+        self.max_shield = 40
+        self.shield = self.max_shield
+        self.damage = 40
         self.attack_cooldown = 20
+        self.speed = 3
+        self.xp = 0
+
         self.cooldown = 20
 
         self.state = 'idle_right'
@@ -111,12 +119,12 @@ class Player(pygame.sprite.Sprite):
             self.attack_cooldown += 1
         
 
-    def move(self, speed):
+    def move(self):
         #  if you move diagonally you gain speed which although is something that is weird
         #  I think its a pretty funny feature that will aid in speedrunning for players
-        self.rect.x += self.movement_direction.x * speed
+        self.rect.x += self.movement_direction.x * self.speed
         self.collide('x')
-        self.rect.y += self.movement_direction.y * speed
+        self.rect.y += self.movement_direction.y * self.speed
         self.collide('y')
 
 
@@ -144,4 +152,4 @@ class Player(pygame.sprite.Sprite):
         self.input_listener()
         self.animate()
         self.idle_listener()
-        self.move(3)
+        self.move()
