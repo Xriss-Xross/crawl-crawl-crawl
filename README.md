@@ -5,4 +5,4 @@ Animations for the player are done for now
 
 Current Progress:
 
-https://youtu.be/aDMOqxcr6bU
+![Current Progress](./assets/image.png)
