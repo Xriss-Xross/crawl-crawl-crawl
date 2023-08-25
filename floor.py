@@ -1,5 +1,6 @@
 import pygame
 
+
 class Floor(pygame.sprite.Sprite):
     def __init__(self, pos, groups):
         super().__init__(groups)

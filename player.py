@@ -32,7 +32,7 @@ class Player(pygame.sprite.Sprite):
 
 
     def asset_loader(self):
-        knight_folder = 'C:/Users/killi/code/python/crawl-crawl-crawl/assets/knight/'
+        knight_folder = './assets/knight/'
         self.knight_states = {'left': [], 'right': [], 'attack_left': [], 'attack_right': [], 'idle_left': [], 'idle_right': []}
 
         def import_images(path):
@@ -98,7 +98,7 @@ class Player(pygame.sprite.Sprite):
             if self.attacking != True:
                 self.frame = 0
                 self.animation = self.knight_states[self.state]
-            self.frame += 0.15
+            self.frame += 0.1
             self.attacking = True
             self.image = self.animation[int(self.frame)]
             if int(self.frame) == 3:
@@ -117,7 +117,7 @@ class Player(pygame.sprite.Sprite):
     def cooldown_handler(self):
         if self.attack_cooldown != self.cooldown:
             self.attack_cooldown += 1
-        
+
 
     def move(self):
         #  if you move diagonally you gain speed which although is something that is weird
@@ -144,7 +144,7 @@ class Player(pygame.sprite.Sprite):
                     if self.movement_direction.y > 0:
                         self.rect.bottom = obstacle.rect.top
                     if self.movement_direction.y < 0:
-                        self.rect.top = obstacle.rect.bottom
+                        self.rect.top = obstacle.rect.bottom        
 
 
     def update(self):

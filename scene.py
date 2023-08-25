@@ -2,13 +2,16 @@ import pygame
 from wall import Wall
 from floor import Floor
 from player import Player
+from spawn_enemy import Enemy
 from levels import ROOM1
 from ui import UI
+
 
 top = (336, 0)
 right = (672, 336)
 bottom = (336, 672)
 left = (0, 336)
+
 
 class Scene:
     def __init__(self, screen):
@@ -34,6 +37,8 @@ class Scene:
                     Wall((x, y), [self.obstruction, self.sprite])
                 else:
                     Floor((x, y), [self.environment, self.sprite])
+                if col == 'S':
+                    Enemy((x, y), [self.sprite], 'slime')
         self.player = Player(bottom, [self.sprite], self.obstruction)
 
 
