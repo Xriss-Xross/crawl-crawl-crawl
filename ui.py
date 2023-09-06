@@ -9,13 +9,19 @@ class UI:
         self.stats_board = pygame.Rect(1, 1, 239, 45)
 
     def draw_stat(self, x, y, info, id):
-        text_surf = self.font.render(id+str(int(info)), False, '#DCF29D')
+        text_surf = self.font.render(id+str(info), False, '#DCF29D')
         text_rect = text_surf.get_rect(midleft = (x, y))
 
         self.screen_surf.blit(text_surf, text_rect)
 
-    def show(self, health, shield, xp):
+    def draw_time(self, x, y, info, id):
+        text_surf = self.font.render(f'{id} {str(int(info / 1000 // 60))}:{str(int(info / 1000 % 60))}', False, '#DCF29D')
+        text_rect = text_surf.get_rect(midleft = (x, y))
+
+        self.screen_surf.blit(text_surf, text_rect)
+
+    def show(self, health, shield, time):
         pygame.draw.rect(self.screen_surf, '#1B1233', self.stats_board)
-        self.draw_stat(4, 22.5, health, 'H:')
-        self.draw_stat(80, 22.5, shield, 'S:')
-        self.draw_stat(150, 22.5, xp, 'XP:')
+        self.draw_stat(14, 22.5, health, 'H:')
+        self.draw_stat(90, 22.5, shield, 'S:')
+        self.draw_time(160, 22.5, time, 'T:')

@@ -6,7 +6,6 @@ from spawn_enemy import Enemy
 from levels import ROOM1
 from ui import UI
 
-
 top = (336, 0)
 right = (672, 336)
 bottom = (336, 672)
@@ -29,6 +28,7 @@ class Scene:
 
     #  makes a numerical grid from an array
     def generate(self):
+        enemies = []
         for y, row in enumerate(ROOM1):
             y *= 48
             for x, col in enumerate(row):
@@ -38,11 +38,15 @@ class Scene:
                 else:
                     Floor((x, y), [self.environment, self.sprite])
                 if col == 'S':
-                    Enemy((x, y), [self.sprite], 'slime')
+                    enemies.append((x, y))
+
         self.player = Player(bottom, [self.sprite], self.obstruction)
 
+        for i in enemies:
+            Enemy(i, [self.sprite], 'slime', self.obstruction)
 
     def run(self):
+        self.time = self.time = pygame.time.get_ticks()
         self.sprite.draw(self.screen)
-        self.sprite.update()
-        self.ui.show(self.player.health, self.player.shield, self.player.xp)
+        self.sprite.update(self.player)
+        self.ui.show(self.player.health, self.player.shield, self.time)

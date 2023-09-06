@@ -120,8 +120,6 @@ class Player(pygame.sprite.Sprite):
 
 
     def move(self):
-        #  if you move diagonally you gain speed which although is something that is weird
-        #  I think its a pretty funny feature that will aid in speedrunning for players
         self.rect.x += self.movement_direction.x * self.speed
         self.collide('x')
         self.rect.y += self.movement_direction.y * self.speed
@@ -147,7 +145,7 @@ class Player(pygame.sprite.Sprite):
                         self.rect.top = obstacle.rect.bottom        
 
 
-    def update(self):
+    def update(self, player):
         self.cooldown_handler()
         self.input_listener()
         self.animate()
