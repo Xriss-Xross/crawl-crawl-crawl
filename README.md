@@ -1,8 +1,8 @@
 # crawl-crawl-crawl
 My A level computing course work.
 
-Enemies now move!
+Enemies now die!
 
 Current Progress:
 
-https://youtube.com/shorts/PCAsd38x5jI?feature=share
+https://youtu.be/Qhb5x4axMu0

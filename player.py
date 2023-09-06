@@ -16,11 +16,11 @@ class Player(pygame.sprite.Sprite):
         self.movement_direction = pygame.math.Vector2() #  creates a vector with x and y values
 
         #  upgradeable player stats
-        self.max_health = 100
+        self.max_health = 10
         self.health = self.max_health
-        self.max_shield = 40
+        self.max_shield = 4
         self.shield = self.max_shield
-        self.damage = 40
+        self.damage = 1
         self.attack_cooldown = 20
         self.speed = 3
         self.xp = 0
@@ -145,9 +145,9 @@ class Player(pygame.sprite.Sprite):
                         self.rect.top = obstacle.rect.bottom        
 
 
-    def update(self, player):
+    def update(self, player, enemy):
         self.cooldown_handler()
+        self.idle_listener()
         self.input_listener()
         self.animate()
-        self.idle_listener()
         self.move()

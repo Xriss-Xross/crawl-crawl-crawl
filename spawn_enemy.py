@@ -3,7 +3,10 @@ import os
 
 
 enemy_stats = {
-    'slime': {'health': 100, 'damage': 10, 'speed': 2, 'attack_range': 20, 'detection_range': 100}
+    'slime': {'health': 10, 'damage': 2, 'cooldown': 90, 'speed': 2, 'attack_range': 20, 'detection_range': 100},
+    'zombie': {'health': 10, 'damage': 3, 'cooldown': 120, 'speed': 1, 'attack_range': 20, 'detection_range': 50},
+    'skeleton': {'health': 1, 'damage': 1, 'cooldown': 90, 'speed': 1, 'attack_range': 40, 'detection_range': 100},
+    'vampire': {'health': 15, 'damage': 2, 'cooldown': 50, 'speed': 4, 'attack_range': 20, 'detection_range': 800}
 }
 
 class Enemy(pygame.sprite.Sprite):
@@ -20,10 +23,13 @@ class Enemy(pygame.sprite.Sprite):
 
         self.health = enemy_stats[enemy]['health']
         self.damage = enemy_stats[enemy]['damage']
+        self.cooldown = enemy_stats[enemy]['cooldown']
         self.speed = enemy_stats[enemy]['speed']
         self.attack_range = enemy_stats[enemy]['attack_range']
         self.detection_range = enemy_stats[enemy]['detection_range']
         
+        self.attack_cooldown = self.cooldown
+
         self.rect = self.image.get_rect(topleft = pos)
         self.asset_loader()
 
@@ -54,19 +60,28 @@ class Enemy(pygame.sprite.Sprite):
         else:
             direction = pygame.math.Vector2()
 
+        print(player.state)
+
+        if 'attack_' in player.state:
+            if player.rect.colliderect(self.rect):
+                self.health -= player.damage
+
         return(distance, direction)
 
 
-    def status_listener(self, player):
+    def status_listener(self, player, enemy):
         distance = self.player_listener(player)[0]
 
-        if distance <= self.attack_range:
+        if distance <= self.attack_range and self.attack_cooldown == self.cooldown:
             self.status = 'attack'
+            self.attack_cooldown = 0
         elif distance <= self.detection_range:
             self.status = 'moving'
         else:
             self.status = 'idle'
 
+        if self.health <= 0:
+            self.kill()
 
 
     def animate(self): 
@@ -107,17 +122,25 @@ class Enemy(pygame.sprite.Sprite):
 
     def player_reaction(self, player):
         if self.status == 'moving':
-            print('here')
             self.movement_direction = self.player_listener(player)[1]
         elif self.status == 'attack':
-            pass
+            if player.shield > 0:
+                player.shield -= self.damage
+            else:
+                player.health -= self.damage
         else:
             self.movement_direction = pygame.math.Vector2()
 
 
-    def update(self, player):
+    def cooldown_handler(self):
+        if self.attack_cooldown != self.cooldown:
+            self.attack_cooldown += 1
+
+
+    def update(self, player, enemy):
         self.move()
+        self.cooldown_handler()
         self.player_listener(player)
-        self.status_listener(player)
+        self.status_listener(player, enemy)
         self.player_reaction(player)
         self.animate()
