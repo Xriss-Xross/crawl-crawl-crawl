@@ -1,8 +1,8 @@
 # crawl-crawl-crawl
 My A level computing course work.
 
-Slime enemy animations
+Enemies now move!
 
 Current Progress:
 
-https://youtu.be/dKcq5XE4j6Y
+https://youtube.com/shorts/PCAsd38x5jI?feature=share
