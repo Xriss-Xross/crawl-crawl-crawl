@@ -16,9 +16,9 @@ class Player(pygame.sprite.Sprite):
         self.movement_direction = pygame.math.Vector2() #  creates a vector with x and y values
 
         #  upgradeable player stats
-        self.max_health = 10
+        self.max_health = 4
         self.health = self.max_health
-        self.max_shield = 4
+        self.max_shield = 10
         self.shield = self.max_shield
         self.damage = 1
         self.attack_cooldown = 20
@@ -83,42 +83,6 @@ class Player(pygame.sprite.Sprite):
                 self.state = 'attack_' + self.state
 
 
-    def idle_listener(self):
-        if 'attack_' in self.state:
-            if self.attack_query == True:
-                self.attack_query = False
-                self.state = self.state[7:]
-    
-        if self.movement_direction.x == 0 and self.movement_direction.y == 0 and 'idle_' not in self.state and 'attack_' not in self.state:
-            self.state = 'idle_' + self.state
-
-
-    def animate(self): 
-        if 'attack_' in self.state or self.attacking == True:
-            if self.attacking != True:
-                self.frame = 0
-                self.animation = self.knight_states[self.state]
-            self.frame += 0.1
-            self.attacking = True
-            self.image = self.animation[int(self.frame)]
-            if int(self.frame) == 3:
-                self.attacking = False
-
-
-        elif self.attacking == False:
-            self.frame += 0.15
-            self.animation = self.knight_states[self.state]
-            if self.frame >= len(self.animation):
-                self.frame = 0
-            self.image = self.animation[int(self.frame)]
-            self.rect = self.image.get_rect(center = self.rect.center)   
-
-
-    def cooldown_handler(self):
-        if self.attack_cooldown != self.cooldown:
-            self.attack_cooldown += 1
-
-
     def move(self):
         self.rect.x += self.movement_direction.x * self.speed
         self.collide('x')
@@ -143,6 +107,42 @@ class Player(pygame.sprite.Sprite):
                         self.rect.bottom = obstacle.rect.top
                     if self.movement_direction.y < 0:
                         self.rect.top = obstacle.rect.bottom        
+
+
+    def idle_listener(self):
+        if 'attack_' in self.state:
+            if self.attack_query == True:
+                self.attack_query = False
+                self.state = self.state[7:]
+    
+        if self.movement_direction.x == 0 and self.movement_direction.y == 0 and 'idle_' not in self.state and 'attack_' not in self.state:
+            self.state = 'idle_' + self.state
+
+
+    def cooldown_handler(self):
+        if self.attack_cooldown != self.cooldown:
+            self.attack_cooldown += 1
+
+
+    def animate(self): 
+        if 'attack_' in self.state or self.attacking == True:
+            if self.attacking != True:
+                self.frame = 0
+                self.animation = self.knight_states[self.state]
+            self.frame += 0.1
+            self.attacking = True
+            self.image = self.animation[int(self.frame)]
+            if int(self.frame) == 3:
+                self.attacking = False
+
+
+        elif self.attacking == False:
+            self.frame += 0.15
+            self.animation = self.knight_states[self.state]
+            if self.frame >= len(self.animation):
+                self.frame = 0
+            self.image = self.animation[int(self.frame)]
+            self.rect = self.image.get_rect(center = self.rect.center)   
 
 
     def update(self, player, enemy):

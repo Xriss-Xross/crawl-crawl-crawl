@@ -3,7 +3,8 @@ from wall import Wall
 from floor import Floor
 from player import Player
 from spawn_enemy import Enemy
-from levels import ROOM1
+from levels import ROOMS
+
 from ui import UI
 
 start = (336, 624)
@@ -30,7 +31,7 @@ class Scene:
     #  makes a numerical grid from an array
     def generate(self):
         enemies = []
-        for y, row in enumerate(ROOM1):
+        for y, row in enumerate(ROOMS[0]):
             y *= 48
             for x, col in enumerate(row):
                 x *= 48
