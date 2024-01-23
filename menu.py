@@ -1,18 +1,15 @@
 import pygame
-from scene import Scene
 from game_generation import generate
-
+from ui import Menu
 
 class Game:
     def __init__(self):
         #  boiler plate
         pygame.init()
         self.screen = pygame.display.set_mode((15*48, 15*48), pygame.NOFRAME)
-        pygame.display.set_caption('Crawl Crawl Crawl')
+        pygame.display.set_caption('Menu')
         self.clock = pygame.time.Clock()
-        levels = generate()
-        level = levels[0][0]
-        self.scene = Scene(self.screen, level)
+        self.scene = Menu()
 
 
     #  runtime
@@ -21,8 +18,9 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
+            self.screen.fill((27, 18, 51))
 
-            self.scene.run()
+            self.scene.show()
             pygame.display.update()
             self.clock.tick(60)
 

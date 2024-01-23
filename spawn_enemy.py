@@ -56,7 +56,7 @@ class Enemy(pygame.sprite.Sprite):
 
         distance = (player_pos - enemy_pos).magnitude()  # turns the vector into a distance
 
-        if distance > 0:
+        if distance > 25:
             direction = (player_pos - enemy_pos).normalize()  # easy normalization
         else:
             direction = pygame.math.Vector2()

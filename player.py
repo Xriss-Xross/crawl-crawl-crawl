@@ -106,7 +106,7 @@ class Player(pygame.sprite.Sprite):
                     if self.movement_direction.y > 0:
                         self.rect.bottom = obstacle.rect.top
                     if self.movement_direction.y < 0:
-                        self.rect.top = obstacle.rect.bottom        
+                        self.rect.top = obstacle.rect.bottom
 
 
     def idle_listener(self):
@@ -142,7 +142,7 @@ class Player(pygame.sprite.Sprite):
             if self.frame >= len(self.animation):
                 self.frame = 0
             self.image = self.animation[int(self.frame)]
-            self.rect = self.image.get_rect(center = self.rect.center)   
+            self.rect = self.image.get_rect(center = self.rect.center)
 
 
     def update(self, player, enemy):
