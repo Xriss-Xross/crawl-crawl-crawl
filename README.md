@@ -1,8 +1,6 @@
 # crawl-crawl-crawl
 My A level computing course work.
 
-Enemies now die!
-
-Current Progress:
-
-https://youtu.be/Qhb5x4axMu0
+Loads of changes but the main ones are:
+-Fixing maps
+-Creating a menu screen
