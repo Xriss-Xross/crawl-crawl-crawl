@@ -1,4 +1,5 @@
 import pygame
+import sqlite3
 import os
 
 
@@ -11,8 +12,9 @@ enemy_stats = {
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, enemy, obstruction):
+    def __init__(self, pos, groups, enemy, obstruction, db):
         super().__init__(groups)
+        self.db = db
         self.enemy_folder = f'./assets/{enemy}/'
         self.frame = 0
         self.movement_direction = pygame.math.Vector2()
@@ -125,6 +127,10 @@ class Enemy(pygame.sprite.Sprite):
                 player.shield += 1
             self.kill()
 
+            self.db.execute(f"UPDATE Character SET Enemies_Defeated = Enemies_Defeated + 1 WHERE CharacterID = 1")
+
+            print(self.db.execute("SELECT Enemies_Defeated FROM Character WHERE CharacterID = 1").fetchall())
+
 
     def cooldown_handler(self):
         if self.attack_cooldown != self.cooldown:
@@ -145,6 +151,6 @@ class Enemy(pygame.sprite.Sprite):
         self.move()
         self.cooldown_handler()
         self.player_listener(player)
-        self.status_listener(player, enemy)
+        self.status_listener(player, enemy,)
         self.player_reaction(player)
         self.animate()

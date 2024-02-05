@@ -1,40 +1,51 @@
 import pygame
+import sqlite3
+
+from database import db_utils
 from wall import Wall
+from exit_block import Exit_block
 from floor import Floor
 from player import Player
 from spawn_enemy import Enemy
 from levels import ROOMS
-
 from ui import UI
 
-positions = [(336, 0), (672, 336), (336, 672), (0, 336)]
 
-start = (336, 624)
-top = (336, 0)
-right = (672, 336)
-bottom = (336, 672)
-left = (0, 336)
+positions = {
+    "start" : (336, 624),
+    "top" : (336, 0),
+    "right" : (672, 336),
+    "bottom" : (336, 672),
+    "left" : (0, 336),
+    "top-exit": (336, -48),
+    "right-exit": (720, 336),
+    "bottom-exit": (336, 720),
+    "left-exit" : (-48, 336)
+}
 
 
 class Scene:
-    def __init__(self, screen, level):
+    def __init__(self, screen, level, db):
         self.screen = screen
         #  sprite groups (whether they are interactable and/or visible etc.)
         #  sprite groups will be passed into a class as a list becuase sprites can have more than one
         self.sprite = pygame.sprite.Group()
         self.obstruction = pygame.sprite.Group()
+        self.exits = pygame.sprite.Group()
         self.environment = pygame.sprite.Group()
         self.entity = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
-        self.level = level
 
-        self.generate()
+        #self.db = db
+        self.level = level
+        self.enemies_spawned = 0
+
+        self.generate(db)
         self.ui = UI()
 
 
     #  makes a numerical grid from an array
-    def generate(self):
-        self.enemies_spawned = 0
+    def generate(self, db):
         to_spawn = []
         for i in range(len(ROOMS[self.level])):
             y = i*48
@@ -53,11 +64,20 @@ class Scene:
                 elif ROOMS[self.level][i][j] == 'B':
                     to_spawn.append([(x, y), 'vampire'])
 
-        self.player = Player(positions[0], [self.sprite], self.obstruction)
+        Exit_block((positions["top-exit"]), [self.obstruction, self.exits, self.sprite])
+        Exit_block((positions["right-exit"]), [self.obstruction, self.exits, self.sprite])
+        Exit_block((positions["bottom-exit"]), [self.obstruction, self.exits, self.sprite])
+        Exit_block((positions["left-exit"]), [self.obstruction, self.exits, self.sprite])
+
+        self.player = Player(positions["start"], [self.sprite], self.obstruction, self.exits)
 
         for i in to_spawn:
             self.enemies_spawned += 1
-            self.enemy = (Enemy(i[0], [self.sprite, self.enemies], i[1], self.obstruction))
+            self.enemy = (Enemy(i[0], [self.sprite, self.enemies], i[1], self.obstruction, db))
+        db.execute(f"UPDATE Character SET Enemies_Spawned = {self.enemies_spawned} WHERE CharacterID = 1")
+        spawned = db.execute(f"SELECT Enemies_Spawned FROM Character WHERE CharacterID = 1").fetchall()
+        
+        print(f"{spawned[0][0]} enemies spawned")
 
 
     def run(self):

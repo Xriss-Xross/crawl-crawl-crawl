@@ -1,9 +1,10 @@
 import pygame
+import sqlite3
 import os
-
+from database import db_utils
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, obstruction):
+    def __init__(self, pos, groups, obstruction, exits):
         super().__init__(groups)
         self.image = pygame.image.load('./assets/knight/idle_left/knight1.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (48, 48))
@@ -13,6 +14,7 @@ class Player(pygame.sprite.Sprite):
         self.attacking = False
 
         self.obstruction = obstruction
+        self.exits = exits
         self.movement_direction = pygame.math.Vector2() #  creates a vector with x and y values
 
         #  upgradeable player stats
@@ -107,6 +109,12 @@ class Player(pygame.sprite.Sprite):
                         self.rect.bottom = obstacle.rect.top
                     if self.movement_direction.y < 0:
                         self.rect.top = obstacle.rect.bottom
+
+
+    def exit(self):
+        for exits in self.exits:
+            if exits.rect.colliderect(self.rect):
+                print(db_utils.execute("SELECT Enemies_Defeated FROM Character").fetchall())
 
 
     def idle_listener(self):
