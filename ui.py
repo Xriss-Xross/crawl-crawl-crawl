@@ -1,45 +1,4 @@
 import pygame
-from database import db_utils
-
-class Menu:
-    def __init__(self):
-        self.db = db_utils()
-
-
-        self.screen_surf = pygame.display.get_surface()
-        self.x_font = pygame.font.Font('./assets/font/8_bit_font.ttf')
-
-        self.x_board = pygame.Rect(673, 1, 45, 45)
-        self.x_back_board = pygame.Rect(self.x_board.center[0]-25, self.x_board.center[1]-22, 48, 48)
-
-        self.slot1_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2-200, 250, 80)
-        self.slot2_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2-100, 250, 80)
-        self.slot3_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2, 250, 80)
-        self.slot4_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2+100, 250, 80)
-
-
-    def draw_slots(self):
-        for i in 4:
-            try:
-                self.db.execute('''
-                                SELECT CharacterID FROM Character
-                                ''')
-            except:
-                
-
- 
-    def show(self):
-        pygame.draw.rect(self.screen_surf, '#DCF29D', self.x_back_board)
-        pygame.draw.rect(self.screen_surf, '#1B1233', self.x_board)
-        pygame.draw.rect(self.screen_surf, '#DCF29D', self.slot1_board)
-        pygame.draw.rect(self.screen_surf, '#DCF29D', self.slot2_board)
-        pygame.draw.rect(self.screen_surf, '#DCF29D', self.slot3_board)
-        pygame.draw.rect(self.screen_surf, '#DCF29D', self.slot4_board)
-
-        UI.draw_x(self, self.x_board.center[0]+2, self.x_board.center[1]+2)
-
-        if pygame.mouse.get_pressed()[0] == True and pygame.mouse.get_pos()[0] in range(self.x_rect.left, self.x_rect.right) and pygame.mouse.get_pos()[1] in range(self.x_rect.top, self.x_rect.bottom):
-            pygame.quit()
 
 
 class UI:

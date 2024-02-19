@@ -74,8 +74,9 @@ class Scene:
         for i in to_spawn:
             self.enemies_spawned += 1
             self.enemy = (Enemy(i[0], [self.sprite, self.enemies], i[1], self.obstruction, db))
-        db.execute(f"UPDATE Character SET Enemies_Spawned = {self.enemies_spawned} WHERE CharacterID = 1")
-        spawned = db.execute(f"SELECT Enemies_Spawned FROM Character WHERE CharacterID = 1").fetchall()
+        db.execute(f"UPDATE Characters SET Enemies_Spawned = {self.enemies_spawned} WHERE CharacterID = 1")
+
+        spawned = db.execute(f"SELECT Enemies_Spawned FROM Characters WHERE CharacterID = 1").fetchall()
         
         print(f"{spawned[0][0]} enemies spawned")
 

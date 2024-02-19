@@ -1,15 +1,15 @@
 import pygame
 from game_generation import generate
-from ui import Menu
+from menuUI import MenuUI
 
-class Game:
+class Menu:
     def __init__(self):
         #  boiler plate
         pygame.init()
         self.screen = pygame.display.set_mode((15*48, 15*48), pygame.NOFRAME)
         pygame.display.set_caption('Menu')
         self.clock = pygame.time.Clock()
-        self.scene = Menu()
+        self.scene = MenuUI()
 
 
     #  runtime
@@ -30,4 +30,4 @@ class Game:
         pygame.quit()
 
 
-Game().play()
+Menu().play()

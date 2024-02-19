@@ -13,7 +13,7 @@ class db_utils:
 
     def create_character(self):
         self.execute("""
-            CREATE TABLE "Character" (
+            CREATE TABLE "Characters" (
                 "CharacterID"   INTEGER,
                 "Max_Health"    INTEGER,
                 "Max_Shield"    INTEGER,
@@ -21,7 +21,7 @@ class db_utils:
                 "Speed" INTEGER,
                 "XP"    INTEGER,
                 "Enemies_Defeated"  INTEGER,
-                "Enemies_Spawned"   INTEGER,
+                "Enemies_Spawned"   INTEGER
             )
         """)
 

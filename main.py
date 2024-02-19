@@ -7,7 +7,7 @@ from database import db_utils
 
 class Game:
     def __init__(self):
-
+        db = db_utils()
         #  boiler plate
         pygame.init()
         self.screen = pygame.display.set_mode((15*48, 15*48), pygame.NOFRAME)
