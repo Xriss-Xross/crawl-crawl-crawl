@@ -15,7 +15,7 @@ class MenuUI:
         self.x_back_board = pygame.Rect(self.x_board.center[0]-25, self.x_board.center[1]-22, 48, 48)
 
         self.slot1_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2-200, 250, 80)
-        self.slot1_surf = self.x_font.render('Slot 1', False, '#1B1233')
+        self.slot1_surf = self.x_font.render(f'Slot 1:', False, '#1B1233')
         self.slot1_rect = self.slot1_surf.get_rect(center = (self.slot1_board.center[0], self.slot1_board.center[1]))
 
         self.slot2_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2-100, 250, 80)

@@ -4,7 +4,7 @@ import os
 from database import db_utils
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, obstruction, exits):
+    def __init__(self, pos, groups, obstruction, exits, charID):
         super().__init__(groups)
         self.image = pygame.image.load('./assets/knight/idle_left/knight1.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (48, 48))
@@ -18,15 +18,18 @@ class Player(pygame.sprite.Sprite):
         self.movement_direction = pygame.math.Vector2() #  creates a vector with x and y values
 
         #  upgradeable player stats
-        self.max_health = 4
+        self.max_health = db_utils().execute(f"SELECT Max_Health FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]
+        print(self.max_health)
         self.health = self.max_health
-        self.max_shield = 10
-        self.shield = self.max_shield
-        self.damage = 1
-        self.attack_cooldown = 20
-        self.speed = 3
-        self.xp = 0
 
+        self.max_shield = db_utils().execute(f"SELECT Max_Shield FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]
+        self.shield = self.max_shield
+
+        self.damage = db_utils().execute(f"SELECT Damage FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]
+        self.speed = db_utils().execute(f"SELECT Speed FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]
+        self.xp = db_utils().execute(f"SELECT XP FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]
+
+        self.attack_cooldown = 20
         self.cooldown = 20
 
         self.state = 'idle_right'
@@ -114,7 +117,8 @@ class Player(pygame.sprite.Sprite):
     def exit(self):
         for exits in self.exits:
             if exits.rect.colliderect(self.rect):
-                print(db_utils.execute("SELECT Enemies_Defeated FROM Characters WHERE CharacterID = 1").fetchall())
+                print("Here 2")
+                #print(db_utils.execute("SELECT Enemies_Defeated FROM Characters WHERE CharacterID = 1").fetchall())
 
 
     def idle_listener(self):

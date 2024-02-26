@@ -71,14 +71,14 @@ class Scene:
         Exit_block((positions["bottom-exit"]), [self.obstruction, self.exits, self.sprite])
         Exit_block((positions["left-exit"]), [self.obstruction, self.exits, self.sprite])
 
-        self.player = Player(positions["start"], [self.sprite], self.obstruction, self.exits)
+        self.player = Player(positions["start"], [self.sprite], self.obstruction, self.exits, self.charID)
 
         for i in to_spawn:
             self.enemies_spawned += 1
             self.enemy = (Enemy(i[0], [self.sprite, self.enemies], i[1], self.obstruction, db))
         db.execute(f"UPDATE Characters SET Enemies_Spawned = {self.enemies_spawned} WHERE CharacterID = {self.charID}")
 
-        spawned = db.execute(f"SELECT Enemies_Spawned FROM Characters WHERE CharacterID = {self.charID}").fetchall()
+        spawned = db.execute(f"SELECT Enemies_Spawned FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
         
         print(f"{spawned} spawned!")
 
