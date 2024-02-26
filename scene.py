@@ -1,7 +1,5 @@
 import pygame
-import sqlite3
 
-from database import db_utils
 from wall import Wall
 from exit_block import Exit_block
 from floor import Floor
@@ -25,7 +23,8 @@ positions = {
 
 
 class Scene:
-    def __init__(self, screen, level, db):
+    def __init__(self, screen, level, db, charID):
+        self.charID = charID
         self.screen = screen
         #  sprite groups (whether they are interactable and/or visible etc.)
         #  sprite groups will be passed into a class as a list becuase sprites can have more than one
@@ -36,7 +35,6 @@ class Scene:
         self.entity = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
 
-        #self.db = db
         self.level = level
         self.enemies_spawned = 0
 
@@ -46,6 +44,10 @@ class Scene:
 
     #  makes a numerical grid from an array
     def generate(self, db):
+        db.execute("""
+            UPDATE Characters
+			SET Enemies_Defeated = 0, Enemies Enemies_Spawned = 0
+        """)
         to_spawn = []
         for i in range(len(ROOMS[self.level])):
             y = i*48
@@ -74,12 +76,11 @@ class Scene:
         for i in to_spawn:
             self.enemies_spawned += 1
             self.enemy = (Enemy(i[0], [self.sprite, self.enemies], i[1], self.obstruction, db))
-        db.execute(f"UPDATE Characters SET Enemies_Spawned = {self.enemies_spawned} WHERE CharacterID = 1")
+        db.execute(f"UPDATE Characters SET Enemies_Spawned = {self.enemies_spawned} WHERE CharacterID = {self.charID}")
 
-        spawned = db.execute(f"SELECT Enemies_Spawned FROM Characters WHERE CharacterID = 1").fetchall()
+        spawned = db.execute(f"SELECT Enemies_Spawned FROM Characters WHERE CharacterID = {self.charID}").fetchall()
         
-        print(f"{spawned[0][0]} enemies spawned")
-
+        print(f"{spawned} spawned!")
 
     def run(self):
         self.time = pygame.time.get_ticks()

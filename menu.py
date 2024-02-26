@@ -13,7 +13,7 @@ class Menu:
 
 
     #  runtime
-    def play(self):
+    def play(self): 
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

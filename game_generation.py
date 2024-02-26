@@ -1,4 +1,6 @@
 import random
+import sqlite3
+from database import db_utils
 
 
 def generate_next_rooms(rooms_remaining, prefabs):
@@ -20,8 +22,8 @@ def generate_next_rooms(rooms_remaining, prefabs):
 	return next_rooms, prefabs, rooms_remaining
 
 
-def generate():
-	
+def generate(db):
+
 	rooms_remaining = 7
 	prefabs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 	map = []

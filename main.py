@@ -4,18 +4,17 @@ from game_generation import generate
 from database import db_utils
 
 
-
 class Game:
-    def __init__(self):
+    def __init__(self, charID):
         db = db_utils()
         #  boiler plate
         pygame.init()
         self.screen = pygame.display.set_mode((15*48, 15*48), pygame.NOFRAME)
         pygame.display.set_caption('Crawl Crawl Crawl')
         self.clock = pygame.time.Clock()
-        levels = generate()
+        levels = generate(db)
         level = levels[0][0]
-        self.scene = Scene(self.screen, level, db)
+        self.scene = Scene(self.screen, level, db, charID)
 
 
     #  runtime
@@ -28,7 +27,6 @@ class Game:
             self.scene.run()
             pygame.display.update()
             self.clock.tick(60)
-
 
 
     def quit(self):

@@ -114,7 +114,7 @@ class Player(pygame.sprite.Sprite):
     def exit(self):
         for exits in self.exits:
             if exits.rect.colliderect(self.rect):
-                print(db_utils.execute("SELECT Enemies_Defeated FROM Character").fetchall())
+                print(db_utils.execute("SELECT Enemies_Defeated FROM Characters WHERE CharacterID = 1").fetchall())
 
 
     def idle_listener(self):
@@ -158,4 +158,6 @@ class Player(pygame.sprite.Sprite):
         self.idle_listener()
         self.input_listener()
         self.animate()
+        self.exit()
         self.move()
+

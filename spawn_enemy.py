@@ -127,9 +127,7 @@ class Enemy(pygame.sprite.Sprite):
                 player.shield += 1
             self.kill()
 
-            self.db.execute(f"UPDATE Character SET Enemies_Defeated = Enemies_Defeated + 1 WHERE CharacterID = 1")
-
-            print(self.db.execute("SELECT Enemies_Defeated FROM Character WHERE CharacterID = 1").fetchall())
+            self.db.execute(f"UPDATE Characters SET Enemies_Defeated = Enemies_Defeated + 1 WHERE CharacterID = 1")
 
 
     def cooldown_handler(self):

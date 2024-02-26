@@ -61,13 +61,16 @@ class MenuUI:
         if pygame.mouse.get_pressed()[0] == True and pygame.mouse.get_pos()[0] in range(self.slot1_rect.left, self.slot1_rect.right) and pygame.mouse.get_pos()[1] in range(self.slot1_rect.top, self.slot1_rect.bottom):
             pygame.quit()
             self.db.execute("UPDATE Characters SET Max_Health = 4, Max_Shield = 10, Damage = 1, Speed = 3, XP = 0, Enemies_Defeated = 0, Enemies_Spawned = 0 WHERE CharacterID = 1")
-            Game().play()
+            Game(1).play()
         if pygame.mouse.get_pressed()[0] == True and pygame.mouse.get_pos()[0] in range(self.slot2_rect.left, self.slot2_rect.right) and pygame.mouse.get_pos()[1] in range(self.slot2_rect.top, self.slot2_rect.bottom):
             pygame.quit()
             self.db.execute("UPDATE Characters SET Max_Health = 4, Max_Shield = 10, Damage = 1, Speed = 3, XP = 0, Enemies_Defeated = 0, Enemies_Spawned = 0 WHERE CharacterID = 2")
+            Game(2).play()
         if pygame.mouse.get_pressed()[0] == True and pygame.mouse.get_pos()[0] in range(self.slot3_rect.left, self.slot3_rect.right) and pygame.mouse.get_pos()[1] in range(self.slot3_rect.top, self.slot3_rect.bottom):
             pygame.quit()
             self.db.execute("UPDATE Characters SET Max_Health = 4, Max_Shield = 10, Damage = 1, Speed = 3, XP = 0, Enemies_Defeated = 0, Enemies_Spawned = 0 WHERE CharacterID = 3")
+            Game(3).play()
         if pygame.mouse.get_pressed()[0] == True and pygame.mouse.get_pos()[0] in range(self.slot4_rect.left, self.slot4_rect.right) and pygame.mouse.get_pos()[1] in range(self.slot4_rect.top, self.slot4_rect.bottom):
             pygame.quit()
             self.db.execute("UPDATE Characters SET Max_Health = 4, Max_Shield = 10, Damage = 1, Speed = 3, XP = 0, Enemies_Defeated = 0, Enemies_Spawned = 0 WHERE CharacterID = 4")
+            Game(4).play()
