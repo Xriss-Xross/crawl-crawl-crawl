@@ -93,6 +93,17 @@ class Player(pygame.sprite.Sprite):
         self.collide('x')
         self.rect.y += self.movement_direction.y * self.speed
         self.collide('y')
+        
+        if self.rect.y == 674:
+            print("South")
+        elif self.rect.x == 0:
+            print("West")
+        elif self.rect.y == 0:
+            print("North")
+        elif self.rect.x == 672:
+            print("East")
+
+        print(self.rect)
 
 
     def collide(self, movement_direction):
@@ -115,10 +126,7 @@ class Player(pygame.sprite.Sprite):
 
 
     def exit(self):
-        for exits in self.exits:
-            if exits.rect.colliderect(self.rect):
-                print("Here 2")
-                #print(db_utils.execute("SELECT Enemies_Defeated FROM Characters WHERE CharacterID = 1").fetchall())
+        pass
 
 
     def idle_listener(self):
@@ -162,6 +170,5 @@ class Player(pygame.sprite.Sprite):
         self.idle_listener()
         self.input_listener()
         self.animate()
-        self.exit()
         self.move()
 
