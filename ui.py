@@ -18,7 +18,7 @@ class UI:
         self.screen_surf.blit(text_surf, text_rect)
 
     def draw_time(self, x, y, info, id):
-        text_surf = self.font.render(f'{id} {str(int(info / 1000 // 60))}:{str(int(info / 1000 % 60))}', False, '#DCF29D')
+        text_surf = self.font.render(f'{id} {str(int(info / 1000 // 60)).zfill(2)}:{str(int(info / 1000 % 60)).zfill(2)}', False, '#DCF29D')
         text_rect = text_surf.get_rect(midleft = (x, y))
 
         self.screen_surf.blit(text_surf, text_rect)
@@ -34,8 +34,8 @@ class UI:
         pygame.draw.rect(self.screen_surf, '#1B1233', self.stats_board)
         pygame.draw.rect(self.screen_surf, '#1B1233', self.x_board)
         self.draw_stat(14, 22.5, health, 'H:')
-        self.draw_stat(90, 22.5, shield, 'S:')
-        self.draw_time(160, 22.5, time, 'T:')
+        self.draw_stat(70, 22.5, shield, 'S:')
+        self.draw_time(140, 22.5, time, 'T:')
         self.draw_x(self.x_board.center[0]+2, self.x_board.center[1]+2)
 
         if pygame.mouse.get_pressed()[0] == True and pygame.mouse.get_pos()[0] in range(self.x_rect.left, self.x_rect.right) and pygame.mouse.get_pos()[1] in range(self.x_rect.top, self.x_rect.bottom):
