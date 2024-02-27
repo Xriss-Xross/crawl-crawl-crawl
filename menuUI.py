@@ -5,7 +5,10 @@ from database import db_utils
 
 class MenuUI:
     def __init__(self):
-        self.db = db_utils()
+        self.time1 = db_utils().execute("SELECT Time FROM Characters WHERE CharacterID = 1").fetchall()[0][0]
+        self.time2 = db_utils().execute("SELECT Time FROM Characters WHERE CharacterID = 2").fetchall()[0][0]
+        self.time3 = db_utils().execute("SELECT Time FROM Characters WHERE CharacterID = 3").fetchall()[0][0]
+        self.time4 = db_utils().execute("SELECT Time FROM Characters WHERE CharacterID = 4").fetchall()[0][0]
 
 
         self.screen_surf = pygame.display.get_surface()
@@ -15,21 +18,21 @@ class MenuUI:
         self.x_back_board = pygame.Rect(self.x_board.center[0]-25, self.x_board.center[1]-22, 48, 48)
 
         self.slot1_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2-200, 250, 80)
-        self.slot1_surf = self.x_font.render(f'Slot 1:', False, '#1B1233')
+        self.slot1_surf = self.x_font.render(f'Slot 1: {self.time1}s', False, '#1B1233')
         self.slot1_rect = self.slot1_surf.get_rect(center = (self.slot1_board.center[0], self.slot1_board.center[1]))
 
         self.slot2_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2-100, 250, 80)
-        self.slot2_surf = self.x_font.render('Slot 2', False, '#1B1233')
+        self.slot2_surf = self.x_font.render(f'Slot 2: {self.time2}s', False, '#1B1233')
         self.slot2_rect = self.slot2_surf.get_rect(center = (self.slot2_board.center[0], self.slot2_board.center[1]))
 
 
         self.slot3_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2, 250, 80)
-        self.slot3_surf = self.x_font.render('Slot 3', False, '#1B1233')
+        self.slot3_surf = self.x_font.render(f'Slot 3: {self.time3}s', False, '#1B1233')
         self.slot3_rect = self.slot3_surf.get_rect(center = (self.slot3_board.center[0], self.slot3_board.center[1]))
 
 
         self.slot4_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2+100, 250, 80)
-        self.slot4_surf = self.x_font.render('Slot 4', False, '#1B1233')
+        self.slot4_surf = self.x_font.render(f'Slot 4: {self.time4}s', False, '#1B1233')
         self.slot4_rect = self.slot4_surf.get_rect(center = (self.slot4_board.center[0], self.slot4_board.center[1]))
 
 
@@ -60,17 +63,17 @@ class MenuUI:
 
         if pygame.mouse.get_pressed()[0] == True and pygame.mouse.get_pos()[0] in range(self.slot1_rect.left, self.slot1_rect.right) and pygame.mouse.get_pos()[1] in range(self.slot1_rect.top, self.slot1_rect.bottom):
             pygame.quit()
-            self.db.execute("UPDATE Characters SET Max_Health = 4, Max_Shield = 10, Damage = 1, Speed = 3, XP = 0, Enemies_Defeated = 0, Enemies_Spawned = 0 WHERE CharacterID = 1")
+            db_utils().execute("UPDATE Characters SET Max_Health = 4, Max_Shield = 10, Damage = 1, Speed = 3, XP = 0, Enemies_Defeated = 0, Enemies_Spawned = 0 WHERE CharacterID = 1")
             Game(1).play()
         if pygame.mouse.get_pressed()[0] == True and pygame.mouse.get_pos()[0] in range(self.slot2_rect.left, self.slot2_rect.right) and pygame.mouse.get_pos()[1] in range(self.slot2_rect.top, self.slot2_rect.bottom):
             pygame.quit()
-            self.db.execute("UPDATE Characters SET Max_Health = 4, Max_Shield = 10, Damage = 1, Speed = 3, XP = 0, Enemies_Defeated = 0, Enemies_Spawned = 0 WHERE CharacterID = 2")
+            db_utils().execute("UPDATE Characters SET Max_Health = 4, Max_Shield = 10, Damage = 1, Speed = 3, XP = 0, Enemies_Defeated = 0, Enemies_Spawned = 0 WHERE CharacterID = 2")
             Game(2).play()
         if pygame.mouse.get_pressed()[0] == True and pygame.mouse.get_pos()[0] in range(self.slot3_rect.left, self.slot3_rect.right) and pygame.mouse.get_pos()[1] in range(self.slot3_rect.top, self.slot3_rect.bottom):
             pygame.quit()
-            self.db.execute("UPDATE Characters SET Max_Health = 4, Max_Shield = 10, Damage = 1, Speed = 3, XP = 0, Enemies_Defeated = 0, Enemies_Spawned = 0 WHERE CharacterID = 3")
+            db_utils().execute("UPDATE Characters SET Max_Health = 4, Max_Shield = 10, Damage = 1, Speed = 3, XP = 0, Enemies_Defeated = 0, Enemies_Spawned = 0 WHERE CharacterID = 3")
             Game(3).play()
         if pygame.mouse.get_pressed()[0] == True and pygame.mouse.get_pos()[0] in range(self.slot4_rect.left, self.slot4_rect.right) and pygame.mouse.get_pos()[1] in range(self.slot4_rect.top, self.slot4_rect.bottom):
             pygame.quit()
-            self.db.execute("UPDATE Characters SET Max_Health = 4, Max_Shield = 10, Damage = 1, Speed = 3, XP = 0, Enemies_Defeated = 0, Enemies_Spawned = 0 WHERE CharacterID = 4")
+            db_utils().execute("UPDATE Characters SET Max_Health = 4, Max_Shield = 10, Damage = 1, Speed = 3, XP = 0, Enemies_Defeated = 0, Enemies_Spawned = 0 WHERE CharacterID = 4")
             Game(4).play()
