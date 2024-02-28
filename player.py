@@ -94,16 +94,14 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.movement_direction.y * self.speed
         self.collide('y')
         
-        if self.rect.y == 674:
-            print("South")
-        elif self.rect.x == 0:
-            print("West")
-        elif self.rect.y == 0:
-            print("North")
-        elif self.rect.x == 672:
-            print("East")
 
-        print(self.rect)
+        if self.rect.y == 0:
+            print("North")
+        elif self.rect.y == 674:
+            print("South")
+
+
+
 
 
     def collide(self, movement_direction):

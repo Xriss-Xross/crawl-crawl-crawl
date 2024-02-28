@@ -1,35 +1,13 @@
 import random
-import sqlite3
 from database import db_utils
 
 
-def generate_next_rooms(rooms_remaining, prefabs):
+def generate():
+	levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+	levelsToSpawn = []
+	for i in range(0, 7):
+		rand = random.randint(0, len(levels)-1)
+		levelsToSpawn.append(levels[rand])
+		levels.pop(rand)
 
-	next_rooms = []
-
-	if rooms_remaining >= 3:
-		rooms = random.randint(1,3)
-		rooms_remaining -= rooms
-	else:
-		rooms = random.randint(1, rooms_remaining)
-		rooms_remaining -= rooms
-
-	for i in range(rooms):
-		n = random.randint(0, len(prefabs)-1)
-		next_rooms.append(prefabs[n])
-		prefabs.pop(n)
-
-	return next_rooms, prefabs, rooms_remaining
-
-
-def generate(db):
-
-	rooms_remaining = 7
-	prefabs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-	map = []
-	
-	while rooms_remaining != 0:
-		next_rooms, prefabs, rooms_remaining = generate_next_rooms(rooms_remaining, prefabs)
-		map.append(next_rooms)
-	map.append([prefabs[random.randint(0, len(prefabs)-1)]])
-	return map
+	return(levelsToSpawn)

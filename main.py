@@ -12,8 +12,11 @@ class Game:
         self.screen = pygame.display.set_mode((15*48, 15*48), pygame.NOFRAME)
         pygame.display.set_caption('Crawl Crawl Crawl')
         self.clock = pygame.time.Clock()
-        levels = generate(db)
-        level = levels[0][0]
+
+        map = db.execute(f"SELECT Map FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]
+        map = eval(map)
+
+        level = map[0]
         self.scene = Scene(self.screen, level, db, charID)
 
 

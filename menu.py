@@ -9,7 +9,8 @@ class Menu:
         self.screen = pygame.display.set_mode((15*48, 15*48), pygame.NOFRAME)
         pygame.display.set_caption('Menu')
         self.clock = pygame.time.Clock()
-        self.scene = MenuUI()
+        levels = generate()
+        self.scene = MenuUI(levels)
 
 
     #  runtime
@@ -23,7 +24,6 @@ class Menu:
             self.scene.show()
             pygame.display.update()
             self.clock.tick(60)
-
 
 
     def quit(self):

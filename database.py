@@ -27,7 +27,8 @@ class db_utils:
                 "XP"    INTEGER,
                 "Enemies_Defeated"  INTEGER,
                 "Enemies_Spawned"   INTEGER,
-                "Time"   INTEGER
+                "Time"   INTEGER,
+                "Map"   STRING
             )
         """)
 
