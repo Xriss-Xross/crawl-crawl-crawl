@@ -1,11 +1,11 @@
 import pygame
-import sqlite3
 import os
 from database import db_utils
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, obstruction, exits, charID):
         super().__init__(groups)
+        self.charID = charID
         self.image = pygame.image.load('./assets/knight/idle_left/knight1.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (48, 48))
         self.rect = self.image.get_rect(topleft = pos)
@@ -96,12 +96,20 @@ class Player(pygame.sprite.Sprite):
         
 
         if self.rect.y == 0:
-            print("North")
-        elif self.rect.y == 674:
-            print("South")
-
-
-
+            en_s = db_utils().execute(f"SELECT Enemies_Spawned FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
+            en_d = db_utils().execute(f"SELECT Enemies_Defeated FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
+            if en_s == en_d:
+                currentLevel = db_utils().execute(f"SELECT Level FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
+                currentTime = db_utils().execute(f"SELECT Time FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
+                if currentLevel != 6:
+                    from main import Game
+                    db_utils().execute(f"UPDATE Characters SET Level = {currentLevel + 1}, Time = {currentTime + pygame.time.get_ticks()} WHERE CharacterID = {self.charID}")
+                    pygame.quit()
+                    Game(self.charID).play()
+                else:
+                    pygame.quit()
+                    time = db_utils.execute(f"SELECT Time FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
+                    print(f"Time taken: {str(int(time / 1000 // 60)).zfill(2)}:{str(int(time / 1000 % 60)).zfill(2)}")
 
 
     def collide(self, movement_direction):
@@ -121,10 +129,6 @@ class Player(pygame.sprite.Sprite):
                         self.rect.bottom = obstacle.rect.top
                     if self.movement_direction.y < 0:
                         self.rect.top = obstacle.rect.bottom
-
-
-    def exit(self):
-        pass
 
 
     def idle_listener(self):
