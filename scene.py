@@ -46,7 +46,7 @@ class Scene:
     def generate(self, db):
         db.execute("""
             UPDATE Characters
-			SET Enemies_Defeated = 0, Enemies Enemies_Spawned = 0
+			SET Enemies_Defeated = 0, Enemies_Spawned = 0
         """)
         to_spawn = []
         for i in range(len(ROOMS[self.level])):

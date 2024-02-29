@@ -12,8 +12,7 @@ class Menu:
         levels = generate()
         self.scene = MenuUI(levels)
 
-
-    #  runtime
+#  runtime
     def play(self): 
         while True:
             for event in pygame.event.get():

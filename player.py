@@ -108,7 +108,7 @@ class Player(pygame.sprite.Sprite):
                     Game(self.charID).play()
                 else:
                     pygame.quit()
-                    time = db_utils.execute(f"SELECT Time FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
+                    time = db_utils().execute(f"SELECT Time FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
                     print(f"Time taken: {str(int(time / 1000 // 60)).zfill(2)}:{str(int(time / 1000 % 60)).zfill(2)}")
 
 
