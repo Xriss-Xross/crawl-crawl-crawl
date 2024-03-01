@@ -19,7 +19,6 @@ class Player(pygame.sprite.Sprite):
 
         #  upgradeable player stats
         self.max_health = db_utils().execute(f"SELECT Max_Health FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]
-        print(self.max_health)
         self.health = self.max_health
 
         self.max_shield = db_utils().execute(f"SELECT Max_Shield FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]
@@ -102,14 +101,18 @@ class Player(pygame.sprite.Sprite):
                 currentLevel = db_utils().execute(f"SELECT Level FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
                 currentTime = db_utils().execute(f"SELECT Time FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
                 if currentLevel != 6:
-                    from main import Game
                     db_utils().execute(f"UPDATE Characters SET Level = {currentLevel + 1}, Time = {currentTime + pygame.time.get_ticks()} WHERE CharacterID = {self.charID}")
+                    
+                    from main import Game  # to prevent circular import class is only called here
                     pygame.quit()
                     Game(self.charID).play()
                 else:
-                    pygame.quit()
                     time = db_utils().execute(f"SELECT Time FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
-                    print(f"Time taken: {str(int(time / 1000 // 60)).zfill(2)}:{str(int(time / 1000 % 60)).zfill(2)}")
+                    db_utils().execute(f"UPDATE Characters SET Final_Time = {time} WHERE CharacterID = {self.charID}")
+
+                    from menu import Menu
+                    pygame.quit()
+                    Menu().play()
 
 
     def collide(self, movement_direction):

@@ -28,6 +28,7 @@ class db_utils:
                 "Enemies_Defeated"  INTEGER,
                 "Enemies_Spawned"   INTEGER,
                 "Time"   INTEGER,
+                "Final_Time"   INTEGER,
                 "Level"   INTEGER,
                 "Map"   STRING
             )
@@ -35,20 +36,20 @@ class db_utils:
 
     def first_create(self):
         self.execute("""
-            INSERT INTO "Characters" (CharacterID, Max_Health, Max_Shield, Damage, Speed, XP, Enemies_Defeated, Enemies_Spawned, Time, Level)
-            VALUES (1, 4, 10, 1, 3, 0, 0, 0, 0, 0)
+            INSERT INTO "Characters" (CharacterID, Max_Health, Max_Shield, Damage, Speed, XP, Enemies_Defeated, Enemies_Spawned, Time, Final_Time, Level)
+            VALUES (1, 4, 10, 1, 3, 0, 0, 0, 0, 0, 0)
         """)
         self.execute("""
-            INSERT INTO "Characters" (CharacterID, Max_Health, Max_Shield, Damage, Speed, XP, Enemies_Defeated, Enemies_Spawned, Time, Level)
-            VALUES (2, 4, 10, 1, 3, 0, 0, 0, 0, 0)
+            INSERT INTO "Characters" (CharacterID, Max_Health, Max_Shield, Damage, Speed, XP, Enemies_Defeated, Enemies_Spawned, Time, Final_Time, Level)
+            VALUES (2, 4, 10, 1, 3, 0, 0, 0, 0, 0, 0)
         """)
         self.execute("""
-            INSERT INTO "Characters" (CharacterID, Max_Health, Max_Shield, Damage, Speed, XP, Enemies_Defeated, Enemies_Spawned, Time, Level)
-            VALUES (3, 4, 10, 1, 3, 0, 0, 0, 0, 0)
+            INSERT INTO "Characters" (CharacterID, Max_Health, Max_Shield, Damage, Speed, XP, Enemies_Defeated, Enemies_Spawned, Time, Final_Time, Level)
+            VALUES (3, 4, 10, 1, 3, 0, 0, 0, 0, 0, 0)
         """)
         self.execute("""
-            INSERT INTO "Characters" (CharacterID, Max_Health, Max_Shield, Damage, Speed, XP, Enemies_Defeated, Enemies_Spawned, Time, Level)
-            VALUES (4, 4, 10, 1, 3, 0, 0, 0, 0, 0)
+            INSERT INTO "Characters" (CharacterID, Max_Health, Max_Shield, Damage, Speed, XP, Enemies_Defeated, Enemies_Spawned, Time, Final_TIme, Level)
+            VALUES (4, 4, 10, 1, 3, 0, 0, 0, 0, 0, 0)
         """)
 
     def execute(self, query):

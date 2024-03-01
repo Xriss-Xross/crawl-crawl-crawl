@@ -8,11 +8,15 @@ class MenuUI:
     def __init__(self, levels):
         self.levels = levels
 
-        self.time1 = db_utils().execute("SELECT Time FROM Characters WHERE CharacterID = 1").fetchall()[0][0]
-        self.time2 = db_utils().execute("SELECT Time FROM Characters WHERE CharacterID = 2").fetchall()[0][0]
-        self.time3 = db_utils().execute("SELECT Time FROM Characters WHERE CharacterID = 3").fetchall()[0][0]
-        self.time4 = db_utils().execute("SELECT Time FROM Characters WHERE CharacterID = 4").fetchall()[0][0]
-
+        self.time1 = db_utils().execute("SELECT Final_Time FROM Characters WHERE CharacterID = 1").fetchall()[0][0]
+        self.time2 = db_utils().execute("SELECT Final_Time FROM Characters WHERE CharacterID = 2").fetchall()[0][0]
+        self.time3 = db_utils().execute("SELECT Final_Time FROM Characters WHERE CharacterID = 3").fetchall()[0][0]
+        self.time4 = db_utils().execute("SELECT Final_Time FROM Characters WHERE CharacterID = 4").fetchall()[0][0]
+        
+        self.time1 = str(f"{str(int(self.time1 / 1000 // 60)).zfill(2)}:{str(int(self.time1 / 1000 % 60)).zfill(2)}")
+        self.time2 = str(f"{str(int(self.time2 / 1000 // 60)).zfill(2)}:{str(int(self.time2 / 1000 % 60)).zfill(2)}")
+        self.time3 = str(f"{str(int(self.time3 / 1000 // 60)).zfill(2)}:{str(int(self.time3 / 1000 % 60)).zfill(2)}")
+        self.time4 = str(f"{str(int(self.time4 / 1000 // 60)).zfill(2)}:{str(int(self.time4 / 1000 % 60)).zfill(2)}")
 
         self.screen_surf = pygame.display.get_surface()
         self.x_font = pygame.font.Font('./assets/font/8_bit_font.ttf')
@@ -21,21 +25,21 @@ class MenuUI:
         self.x_back_board = pygame.Rect(self.x_board.center[0]-25, self.x_board.center[1]-22, 48, 48)
 
         self.slot1_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2-200, 250, 80)
-        self.slot1_surf = self.x_font.render(f'Slot 1: {self.time1}s', False, '#1B1233')
+        self.slot1_surf = self.x_font.render(f'Slot 1  {self.time1}', False, '#1B1233')
         self.slot1_rect = self.slot1_surf.get_rect(center = (self.slot1_board.center[0], self.slot1_board.center[1]))
 
         self.slot2_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2-100, 250, 80)
-        self.slot2_surf = self.x_font.render(f'Slot 2: {self.time2}s', False, '#1B1233')
+        self.slot2_surf = self.x_font.render(f'Slot 2  {self.time2}', False, '#1B1233')
         self.slot2_rect = self.slot2_surf.get_rect(center = (self.slot2_board.center[0], self.slot2_board.center[1]))
 
 
         self.slot3_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2, 250, 80)
-        self.slot3_surf = self.x_font.render(f'Slot 3: {self.time3}s', False, '#1B1233')
+        self.slot3_surf = self.x_font.render(f'Slot 3  {self.time3}', False, '#1B1233')
         self.slot3_rect = self.slot3_surf.get_rect(center = (self.slot3_board.center[0], self.slot3_board.center[1]))
 
 
         self.slot4_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2+100, 250, 80)
-        self.slot4_surf = self.x_font.render(f'Slot 4: {self.time4}s', False, '#1B1233')
+        self.slot4_surf = self.x_font.render(f'Slot 4  {self.time4}', False, '#1B1233')
         self.slot4_rect = self.slot4_surf.get_rect(center = (self.slot4_board.center[0], self.slot4_board.center[1]))
 
 
