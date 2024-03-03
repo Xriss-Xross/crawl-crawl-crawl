@@ -81,6 +81,10 @@ class Enemy(pygame.sprite.Sprite):
                 player.shield = 0
             else:
                 player.health -= self.damage
+                if player.health <= 0:
+                    from menu import Menu
+                    pygame.quit()
+                    Menu().play()
         else:
             self.movement_direction = pygame.math.Vector2()
 
