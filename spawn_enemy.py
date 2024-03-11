@@ -20,7 +20,7 @@ class Enemy(pygame.sprite.Sprite):
         self.movement_direction = pygame.math.Vector2()
         self.sprite_type = enemy
         self.image = pygame.image.load(self.enemy_folder+f'{enemy}1.png').convert_alpha()
-        self.image = pygame.transform.scale(self.image, (30, 30))
+        self.image = pygame.transform.scale(self.image, (48, 48))
         self.status = 'idle'
         self.obstruction = obstruction
 

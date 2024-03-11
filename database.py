@@ -38,7 +38,7 @@ class db_utils:
         self.execute("""
             INSERT INTO "Characters" (CharacterID, Max_Health, Max_Shield, Damage, Speed, XP, Enemies_Defeated, Enemies_Spawned, Time, Final_Time, Level)
             VALUES (1, 4, 10, 1, 3, 0, 0, 0, 0, 0, 0)
-        """)
+        """)    
         self.execute("""
             INSERT INTO "Characters" (CharacterID, Max_Health, Max_Shield, Damage, Speed, XP, Enemies_Defeated, Enemies_Spawned, Time, Final_Time, Level)
             VALUES (2, 4, 10, 1, 3, 0, 0, 0, 0, 0, 0)

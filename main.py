@@ -16,8 +16,8 @@ class Game:
         map = db.execute(f"SELECT Map FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]
         map = eval(map)
 
-        level = map[db.execute(f"SELECT Level FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]]
-        self.scene = Scene(self.screen, level, db, charID)
+        self.level = map[db.execute(f"SELECT Level FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]]
+        self.scene = Scene(self.screen, self.level, db, charID)
 
 
     #  runtime
