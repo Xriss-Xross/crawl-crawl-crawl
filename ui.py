@@ -4,6 +4,7 @@ from database import db_utils
 
 class UI:
     def __init__(self, charID):
+        #  adds the current ticks to what the player has already done
         self.time = db_utils().execute(f"SELECT Time FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]
         self.screen_surf = pygame.display.get_surface()
         self.font = pygame.font.Font('./assets/font/8_bit_font.ttf')
@@ -20,6 +21,7 @@ class UI:
         self.screen_surf.blit(text_surf, text_rect)
 
     def draw_time(self, x, y, info, id):
+        #  logic to make time more human readalbe
         text_surf = self.font.render(f'{id} {str(int((info + self.time) / 1000 // 60)).zfill(2)}:{str(int((info + self.time) / 1000 % 60)).zfill(2)}', False, '#DCF29D')
         text_rect = text_surf.get_rect(midleft = (x, y))
 

@@ -10,9 +10,11 @@ class Menu:
         pygame.display.set_caption('Menu')
         self.clock = pygame.time.Clock()
         levels = generate()
+
+        #  creates the UI
         self.scene = MenuUI(levels)
 
-#  runtime
+    #  runtime
     def play(self): 
         while True:
             for event in pygame.event.get():

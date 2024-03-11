@@ -3,7 +3,7 @@ import sqlite3
 import os
 
 
-enemy_stats = {
+enemy_stats = {  # main enemy stats
     'slime': {'health': 10, 'damage': 2, 'cooldown': 90, 'speed': 2, 'attack_range': 20, 'detection_range': 100},
     'zombie': {'health': 10, 'damage': 3, 'cooldown': 120, 'speed': 1, 'attack_range': 20, 'detection_range': 50},
     'skeleton': {'health': 5, 'damage': 1, 'cooldown': 90, 'speed': 1, 'attack_range': 40, 'detection_range': 100},
@@ -24,6 +24,7 @@ class Enemy(pygame.sprite.Sprite):
         self.status = 'idle'
         self.obstruction = obstruction
 
+        #  fetched from the dictionary of main stats
         self.health = enemy_stats[enemy]['health']
         self.damage = enemy_stats[enemy]['damage']
         self.cooldown = enemy_stats[enemy]['cooldown']
@@ -56,10 +57,12 @@ class Enemy(pygame.sprite.Sprite):
         enemy_pos = pygame.math.Vector2(self.rect.center)
         player_pos = pygame.math.Vector2(player.rect.center)
 
+        #  compares the positions to create a distance
         distance = (player_pos - enemy_pos).magnitude()  # turns the vector into a distance
 
         if distance > 25:
-            direction = (player_pos - enemy_pos).normalize()  # easy normalization
+            direction = (player_pos - enemy_pos).normalize()  # diagonal speed won't be faster
+                                                              # than horizontal or vertical
         else:
             direction = pygame.math.Vector2()
 

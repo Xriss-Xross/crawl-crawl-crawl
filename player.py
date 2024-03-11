@@ -15,9 +15,9 @@ class Player(pygame.sprite.Sprite):
 
         self.obstruction = obstruction
         self.exits = exits
-        self.movement_direction = pygame.math.Vector2() #  creates a vector with x and y values
+        self.movement_direction = pygame.math.Vector2() #  creates a vector for x and y values
 
-        #  upgradeable player stats
+        #  main player stats
         self.max_health = db_utils().execute(f"SELECT Max_Health FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]
         self.health = self.max_health
 
@@ -28,15 +28,19 @@ class Player(pygame.sprite.Sprite):
         self.speed = db_utils().execute(f"SELECT Speed FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]
         self.xp = db_utils().execute(f"SELECT XP FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]
 
+        #  for the cooldown handler later
         self.attack_cooldown = 20
         self.cooldown = 20
 
+        #  default state for the character starting out
         self.state = 'idle_right'
         self.asset_loader()
 
 
     def asset_loader(self):
+        
         knight_folder = './assets/knight/'
+        #  after the function is complete will contain the pygame images of all animated states
         self.knight_states = {'left': [], 'right': [], 'attack_left': [], 'attack_right': [], 'idle_left': [], 'idle_right': []}
 
         def import_images(path):
@@ -88,25 +92,29 @@ class Player(pygame.sprite.Sprite):
 
 
     def move(self):
+        #  player's rectangle (within which the player is drawn) is moved
         self.rect.x += self.movement_direction.x * self.speed
+
+        #  immediately after manipulating the player's position
+        #  collisions are checked for
         self.collide('x')
         self.rect.y += self.movement_direction.y * self.speed
         self.collide('y')
         
 
-        if self.rect.y == 0:
+        if self.rect.y == 0:  # if the player is attempting to leave the room a completion check will be made
             en_s = db_utils().execute(f"SELECT Enemies_Spawned FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
             en_d = db_utils().execute(f"SELECT Enemies_Defeated FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
             if en_s == en_d:
                 currentLevel = db_utils().execute(f"SELECT Level FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
                 currentTime = db_utils().execute(f"SELECT Time FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
-                if currentLevel != 6:
+                if currentLevel != 6:  # if the completion check is complete and there are no more levels the game is done
                     db_utils().execute(f"UPDATE Characters SET Level = {currentLevel + 1}, Time = {currentTime + pygame.time.get_ticks()} WHERE CharacterID = {self.charID}")
                     
                     from main import Game  # to prevent circular import class is only called here
                     pygame.quit()
                     Game(self.charID).play()
-                else:
+                else:  # if there are more rooms to complete
                     time = db_utils().execute(f"SELECT Time FROM Characters WHERE CharacterID = {self.charID}").fetchall()[0][0]
                     db_utils().execute(f"UPDATE Characters SET Final_Time = {time} WHERE CharacterID = {self.charID}")
 
@@ -135,6 +143,7 @@ class Player(pygame.sprite.Sprite):
 
 
     def idle_listener(self):
+        #  makes sure that a state can't end up being invalid
         if 'attack_' in self.state:
             if self.attack_query == True:
                 self.attack_query = False
@@ -145,23 +154,28 @@ class Player(pygame.sprite.Sprite):
 
 
     def cooldown_handler(self):
+        #  a countdown for when the player can next attack
         if self.attack_cooldown != self.cooldown:
             self.attack_cooldown += 1
 
 
     def animate(self): 
+        #  attack frames are run through
         if 'attack_' in self.state or self.attacking == True:
             if self.attacking != True:
                 self.frame = 0
                 self.animation = self.knight_states[self.state]
             self.frame += 0.1
+            #  frame is rounded to the next int to decide what frame should
+            #  be displayed
             self.attacking = True
             self.image = self.animation[int(self.frame)]
             if int(self.frame) == 3:
                 self.attacking = False
+            #  if the final attack frame is displayed then the attack is over
 
 
-        elif self.attacking == False:
+        elif self.attacking == False:  # otherwise the player is animated normally
             self.frame += 0.15
             self.animation = self.knight_states[self.state]
             if self.frame >= len(self.animation):
@@ -170,7 +184,7 @@ class Player(pygame.sprite.Sprite):
             self.rect = self.image.get_rect(center = self.rect.center)
 
 
-    def update(self, player, enemy):
+    def update(self, player, enemy):  # updates every frame to maintain the player
         self.cooldown_handler()
         self.idle_listener()
         self.input_listener()

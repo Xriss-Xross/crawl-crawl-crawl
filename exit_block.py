@@ -1,7 +1,7 @@
 import pygame
 
 
-class Exit_block(pygame.sprite.Sprite):
+class Exit_block(pygame.sprite.Sprite):  # inherits the sprite group it is given
     def __init__(self, pos, groups):
         super().__init__(groups)
         self.image = pygame.image.load('./assets/environment/exit_block.png').convert_alpha()

@@ -13,10 +13,14 @@ class Game:
         pygame.display.set_caption('Crawl Crawl Crawl')
         self.clock = pygame.time.Clock()
 
+        #  the map is selected from the database (stored in string form)
         map = db.execute(f"SELECT Map FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]
         map = eval(map)
 
+        #  the level on which the player is at is selected 
         self.level = map[db.execute(f"SELECT Level FROM Characters WHERE CharacterID = {charID}").fetchall()[0][0]]
+
+        #  the scene is created
         self.scene = Scene(self.screen, self.level, db, charID)
 
 
@@ -29,6 +33,7 @@ class Game:
 
             self.scene.run()
             pygame.display.update()
+            #  limits the frame rate to 60 fps
             self.clock.tick(60)
 
 

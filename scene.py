@@ -49,8 +49,8 @@ class Scene:
 			SET Enemies_Defeated = 0, Enemies_Spawned = 0
         """)
         to_spawn = []
-        for i in range(len(ROOMS[self.level])):
-            y = i*48
+        for i in range(len(ROOMS[self.level])):  # nested loop through 2D grid array
+            y = i*48  # each tile is 48*48 pixels
             for j in range(len(ROOMS[self.level][i])):
                 x = j*48
                 if ROOMS[self.level][i][j] == 'W':
@@ -66,20 +66,22 @@ class Scene:
                 elif ROOMS[self.level][i][j] == 'B':
                     to_spawn.append([(x, y), 'vampire'])
 
+        #  invisible exit blocks so that the player can't go out of bounds
         Exit_block((positions["top-exit"]), [self.obstruction, self.exits, self.sprite])
-        Exit_block((positions["right-exit"]), [self.obstruction, self.exits, self.sprite])
         Exit_block((positions["bottom-exit"]), [self.obstruction, self.exits, self.sprite])
-        Exit_block((positions["left-exit"]), [self.obstruction, self.exits, self.sprite])
+
 
         self.player = Player(positions["bottom"], [self.sprite], self.obstruction, self.exits, self.charID)
 
         for i in to_spawn:
             self.enemies_spawned += 1
             self.enemy = (Enemy(i[0], [self.sprite, self.enemies], i[1], self.obstruction, db))
+        #  updates how many enemeies have been spawned in a scene
         db.execute(f"UPDATE Characters SET Enemies_Spawned = {self.enemies_spawned} WHERE CharacterID = {self.charID}")
         
 
     def run(self):
+        #  updates every frame to maintain game
         self.time = pygame.time.get_ticks()
         self.sprite.draw(self.screen)
         self.sprite.update(self.player, self.enemy)

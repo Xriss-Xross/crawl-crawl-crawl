@@ -1,7 +1,7 @@
 import pygame
 
 
-class Wall(pygame.sprite.Sprite):
+class Wall(pygame.sprite.Sprite):  # inherits the sprite group it is given
     def __init__(self, pos, groups):
         super().__init__(groups)
         self.image = pygame.image.load('./assets/environment/brick.png').convert_alpha()
