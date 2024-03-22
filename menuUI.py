@@ -36,11 +36,9 @@ class MenuUI:
         self.slot2_surf = self.x_font.render(f'Slot 2  {self.time2}', False, '#1B1233')
         self.slot2_rect = self.slot2_surf.get_rect(center = (self.slot2_board.center[0], self.slot2_board.center[1]))
 
-
         self.slot3_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2, 250, 80)
         self.slot3_surf = self.x_font.render(f'Slot 3  {self.time3}', False, '#1B1233')
         self.slot3_rect = self.slot3_surf.get_rect(center = (self.slot3_board.center[0], self.slot3_board.center[1]))
-
 
         self.slot4_board = pygame.Rect(self.screen_surf.get_size()[0]/2-125, self.screen_surf.get_size()[1]/2+100, 250, 80)
         self.slot4_surf = self.x_font.render(f'Slot 4  {self.time4}', False, '#1B1233')
