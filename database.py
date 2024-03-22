@@ -7,7 +7,7 @@ class db_utils:
         if not os.path.exists("db"):  # database is being created for the first time
             self.init = True          
             os.makedirs("db")
-        
+
         self.conn = sqlite3.connect("db/data.db")  # boiler plate
         self.cursor = self.conn.cursor()
         self.create_character()  # attempts to create table

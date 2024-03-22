@@ -159,7 +159,7 @@ class Player(pygame.sprite.Sprite):
             self.attack_cooldown += 1
 
 
-    def animate(self): 
+    def animate(self):
         #  attack frames are run through
         if 'attack_' in self.state or self.attacking == True:
             if self.attacking != True:
